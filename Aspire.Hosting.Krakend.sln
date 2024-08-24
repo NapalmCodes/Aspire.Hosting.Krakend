@@ -5,18 +5,28 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NapalmCodes.Aspire.Hosting.Krakend", "NapalmCodes.Aspire.Hosting.Krakend\NapalmCodes.Aspire.Hosting.Krakend.csproj", "{E8FEC82F-C934-4EA1-99DA-F50EA4287DA4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{77595ED8-3D80-4049-B593-D877BE38272F}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E8FEC82F-C934-4EA1-99DA-F50EA4287DA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E8FEC82F-C934-4EA1-99DA-F50EA4287DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8FEC82F-C934-4EA1-99DA-F50EA4287DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8FEC82F-C934-4EA1-99DA-F50EA4287DA4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E485AC5E-0D58-4DE0-82B4-0714B36B10D6}
 	EndGlobalSection
 EndGlobal
