@@ -20,7 +20,7 @@ jobs:
     - name: Get Build Version
       run: |
         echo "GITHUB_REF=$GITHUB_REF"
-        branch_name = ${GITHUB_REF#refs/heads/}
+        branch_name=${GITHUB_REF#refs/heads/}
         version=$(./build/GetBuildVersion.sh ${branch_name#*/})
         echo "BUILD_VERSION=$version" >> $GITHUB_ENV
       shell: bash
