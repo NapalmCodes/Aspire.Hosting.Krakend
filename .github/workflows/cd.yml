@@ -19,9 +19,9 @@ jobs:
     
     - name: Get Build Version
       run: |
-        source ./build/GetBuildVersion.sh
         echo "GITHUB_REF=$GITHUB_REF"
-        version=$(GetBuildVersion "$GITHUB_REF")
+        branch_name = ${GITHUB_REF#refs/heads/}
+        version=$(./build/GetBuildVersion.sh ${branch_name#*/})
         echo "BUILD_VERSION=$version" >> $GITHUB_ENV
       shell: bash
 
@@ -36,5 +36,5 @@ jobs:
     - name: Publish
       if: startsWith(github.ref, 'refs/heads/release')
       run: |
-        dotnet nuget push **/*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
-        dotnet nuget push **/*.snupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+        dotnet nuget push **/*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
+        dotnet nuget push **/*.snupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
