@@ -13,7 +13,7 @@ jobs:
 
     env:
       BUILD_CONFIG: 'Release'
-      SOLUTION: 'Aspire.Hosting.Krakend.sln'
+      SOLUTION: 'NapalmCodes.Aspire.Hosting.Krakend.sln'
 
     runs-on: ubuntu-latest
 
