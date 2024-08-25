@@ -5,7 +5,37 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>NapalmCodes.Aspire.Hosting.Krakend</Title>
+    <Authors>Shawn Vause</Authors>
+    <Description>Aspire hosting component for the high performance KrakenD (https://www.krakend.io/) API Gateway.</Description>
+    <PackageProjectUrl>https://github.com/NapalmCodes/Aspire.Hosting.Krakend</PackageProjectUrl>
+    <PackageIcon>aspire-krakend-icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/NapalmCodes/Aspire.Hosting.Krakend</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>aspire;hosting;krakend;napalm</PackageTags>
+    <Copyright>Copyright (c) Shawn Vause 2024</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\images\aspire-krakend-icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting" Version="8.1.0" />

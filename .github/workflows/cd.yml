@@ -1,0 +1,46 @@
+name: CD
+
+on:
+  create:
+    branches: 
+      - release/**
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+    
+jobs:
+  build:
+
+    env:
+      BUILD_CONFIG: 'Release'
+      SOLUTION: 'NapalmCodes.Aspire.Hosting.Krakend.sln'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Get Build Version
+      run: |
+        source ./build/GetBuildVersion.sh
+        echo "GITHUB_REF=$GITHUB_REF"
+        version=$(GetBuildVersion "$GITHUB_REF")
+        echo "BUILD_VERSION=$version" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Build
+      run: dotnet build $SOLUTION --configuration $BUILD_CONFIG -p:Version=$BUILD_VERSION
+      
+    - name: Publish
+      if: startsWith(github.ref, 'refs/heads/release')
+      run: |
+        dotnet nuget push **/*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+        dotnet nuget push **/*.snupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
