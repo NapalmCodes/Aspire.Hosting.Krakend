@@ -1,11 +1,11 @@
-![Aspire Krakend Logo](./images/aspire-krakend-logo.png) 
+![Aspire Krakend Logo](https://raw.githubusercontent.com/NapalmCodes/Aspire.Hosting.Krakend/main/images/aspire-krakend-logo.png) 
 
 # Aspire.Hosting.Krakend
 Aspire hosting component for the high performance KrakenD (https://www.krakend.io/) API Gateway.
 
 ## Overview
 The project provides a lightweight [.NET Aspire](https://learn.microsoft.com/en-us/dotnet/aspire/) component around the official Community Edition (OSS version) of the KrakenD API Gateway Docker [container](https://hub.docker.com/r/devopsfaith/krakend).
-The current latest version of the container is `2.7.0`. Utilization of the component allows developers to work with KrakenD locally and/or configure for a production deployment using [Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/overview) and [Azure Developer CLI](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/&ved=2ahUKEwjjn9iV046IAxUCMlkFHV7VCdEQFnoECCkQAQ&usg=AOvVaw0Y5N7vJDfjU4Osk3zCXMmB) or [Aspirate](https://github.com/prom3theu5/aspirational-manifests) and [Kubernetes](https://kubernetes.io/). 
+The current latest version of the container is found [here](https://github.com/NapalmCodes/Aspire.Hosting.Krakend/blob/c4266b82e968de8ef3aedb05d347cfab74a68e8b/NapalmCodes.Aspire.Hosting.Krakend/KrakendContainerImageTags.cs#L7). Utilization of the component allows developers to work with KrakenD locally and/or configure for a production deployment using [Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/overview) and [Azure Developer CLI](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/&ved=2ahUKEwjjn9iV046IAxUCMlkFHV7VCdEQFnoECCkQAQ&usg=AOvVaw0Y5N7vJDfjU4Osk3zCXMmB) or [Aspirate](https://github.com/prom3theu5/aspirational-manifests) and [Kubernetes](https://kubernetes.io/). 
 
 ## Use
 
