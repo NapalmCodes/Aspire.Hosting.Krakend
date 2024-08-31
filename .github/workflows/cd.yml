@@ -1,9 +1,9 @@
 name: CD
 
 on:
-  create:
-    branches: 
-      - release/**
+  push:
+    branches:
+      - 'release/**'
     
 jobs:
   build:
