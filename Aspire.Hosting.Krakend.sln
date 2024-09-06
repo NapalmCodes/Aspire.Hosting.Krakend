@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NapalmCodes.Aspire.Hosting.Krakend", "NapalmCodes.Aspire.Hosting.Krakend\NapalmCodes.Aspire.Hosting.Krakend.csproj", "{E8FEC82F-C934-4EA1-99DA-F50EA4287DA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NapalmCodes.Aspire.Hosting.Krakend", "NapalmCodes.Aspire.Hosting.Krakend\NapalmCodes.Aspire.Hosting.Krakend.csproj", "{E8FEC82F-C934-4EA1-99DA-F50EA4287DA4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{77595ED8-3D80-4049-B593-D877BE38272F}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionF
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NapalmCodes.Aspire.Hosting.Krakend.Tests", "NapalmCodes.Aspire.Hosting.Krakend.Tests\NapalmCodes.Aspire.Hosting.Krakend.Tests.csproj", "{40E4C6F6-4675-4929-AC59-168875D471E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +24,10 @@ Global
 		{E8FEC82F-C934-4EA1-99DA-F50EA4287DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8FEC82F-C934-4EA1-99DA-F50EA4287DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8FEC82F-C934-4EA1-99DA-F50EA4287DA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40E4C6F6-4675-4929-AC59-168875D471E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40E4C6F6-4675-4929-AC59-168875D471E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40E4C6F6-4675-4929-AC59-168875D471E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40E4C6F6-4675-4929-AC59-168875D471E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
