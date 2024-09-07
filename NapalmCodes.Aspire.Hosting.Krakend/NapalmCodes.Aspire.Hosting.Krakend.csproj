@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Title>NapalmCodes.Aspire.Hosting.Krakend</Title>
     <Authors>Shawn Vause</Authors>
     <Description>Aspire hosting component for the high performance KrakenD (https://www.krakend.io/) API Gateway.</Description>
@@ -40,6 +41,10 @@
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting" Version="8.2.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="NapalmCodes.Aspire.Hosting.Krakend.Tests" />
   </ItemGroup>
 
 </Project>
