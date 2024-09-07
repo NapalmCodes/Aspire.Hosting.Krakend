@@ -32,6 +32,9 @@ jobs:
 
     - name: Build
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG /p:ContinuousIntegrationBuild=true -p:Version=$BUILD_VERSION
+
+    - name: Test
+      run: dotnet test --configuration $BUILD_CONFIG
       
     - name: Publish
       if: startsWith(github.ref, 'refs/heads/release')

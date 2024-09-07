@@ -27,3 +27,6 @@ jobs:
 
     - name: Build
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG /p:ContinuousIntegrationBuild=true
+
+    - name: Test
+      run: dotnet test --configuration $BUILD_CONFIG      
