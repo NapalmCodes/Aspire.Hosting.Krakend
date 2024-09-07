@@ -1,6 +1,6 @@
 ﻿namespace NapalmCodes.Aspire.Hosting.Krakend;
 
-internal class KrakendContainerImageTags
+internal static class KrakendContainerImageTags
 {
     public const string Registry = "docker.io";
     public const string Image = "devopsfaith/krakend";

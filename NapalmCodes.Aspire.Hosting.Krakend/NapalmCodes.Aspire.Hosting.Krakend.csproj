@@ -42,4 +42,8 @@
     <PackageReference Include="System.Text.Json" Version="8.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="NapalmCodes.Aspire.Hosting.Krakend.Tests" />
+  </ItemGroup>
+
 </Project>
