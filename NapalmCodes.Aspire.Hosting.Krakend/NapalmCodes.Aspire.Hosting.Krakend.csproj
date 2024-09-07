@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Title>NapalmCodes.Aspire.Hosting.Krakend</Title>
     <Authors>Shawn Vause</Authors>
     <Description>Aspire hosting component for the high performance KrakenD (https://www.krakend.io/) API Gateway.</Description>

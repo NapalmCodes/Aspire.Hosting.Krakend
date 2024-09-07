@@ -34,7 +34,7 @@ jobs:
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG /p:ContinuousIntegrationBuild=true -p:Version=$BUILD_VERSION
 
     - name: Test
-      run: dotnet test --configuration $BUILD_CONFIG
+      run: dotnet test --configuration $BUILD_CONFIG --no-restore --no-build --verbosity normal
       
     - name: Publish
       if: startsWith(github.ref, 'refs/heads/release')
