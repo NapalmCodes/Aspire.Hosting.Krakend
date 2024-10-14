@@ -21,6 +21,7 @@ var krakend = builder.AddKrakend("gateway", port: 8080)
     .WithEnvironment("FC_ENABLE", "1")
     .WithEnvironment("FC_OUT", "/etc/krakend/result.json")
     .WithEnvironment("APISERVICE_COUNT", API_REPLICAS.ToString())
+    .WithProxy()
     .WithReference(apiService);
 
 builder.AddProject<Projects.BasicApiGateway_Web>("webfrontend")

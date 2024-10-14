@@ -16,7 +16,12 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="8.2.1" />
-    <PackageReference Include="NapalmCodes.Aspire.Hosting.Krakend" Version="1.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NapalmCodes.Aspire.Hosting.Krakend">
+      <HintPath>..\..\..\..\NapalmCodes.Aspire.Hosting.Krakend\bin\Debug\net8.0\NapalmCodes.Aspire.Hosting.Krakend.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
