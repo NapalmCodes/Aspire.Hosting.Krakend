@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -12,16 +12,11 @@
   <ItemGroup>
     <ProjectReference Include="..\BasicApiGateway.ApiService\BasicApiGateway.ApiService.csproj" />
     <ProjectReference Include="..\BasicApiGateway.Web\BasicApiGateway.Web.csproj" />
+    <ProjectReference Include="..\..\..\..\NapalmCodes.Aspire.Hosting.Krakend\NapalmCodes.Aspire.Hosting.Krakend.csproj" IsAspireProjectResource="false" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="8.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="NapalmCodes.Aspire.Hosting.Krakend">
-      <HintPath>..\..\..\..\NapalmCodes.Aspire.Hosting.Krakend\bin\Debug\net8.0\NapalmCodes.Aspire.Hosting.Krakend.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
