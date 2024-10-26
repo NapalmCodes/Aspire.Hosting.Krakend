@@ -76,7 +76,8 @@ public static class KrakendBuilderExtensions
                 targetPort: 8081
             )
             .WithImage(ProxyContainerImageTags.Image, ProxyContainerImageTags.Tag)
-            .WithImageRegistry(ProxyContainerImageTags.Registry)
+            // TODO: Re-enable after published to docker hub
+            //.WithImageRegistry(ProxyContainerImageTags.Registry)
             .WithOtlpExporter();
 
         if (excludeFromManifest)
@@ -84,6 +85,6 @@ public static class KrakendBuilderExtensions
             resourceBuilder.ExcludeFromManifest();
         }
 
-        return builder.WithReference(resourceBuilder);
+        return builder.WithEnvironment("PROXY_URL", proxy.PrimaryEndpoint);
     }
 }
