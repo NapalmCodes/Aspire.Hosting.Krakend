@@ -67,6 +67,8 @@ public static class KrakendBuilderExtensions
         int? port = null,
         bool excludeFromManifest = false)
     {
+        // TODO: Proxy is going to need a config mount for the json
+        
         name ??= $"{builder.Resource.Name}-proxy";
 
         var proxy = new ProxyResource(name);
