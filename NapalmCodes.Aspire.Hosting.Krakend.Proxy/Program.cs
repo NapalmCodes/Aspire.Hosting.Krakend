@@ -31,3 +31,7 @@ app.MapReverseProxy();
 app.MapGet("/", () => "OK!");
 
 app.Run();
+
+//TODO: Instrument with OTEL
+//TODO: Doc updates
+//TODO: Build updates (publish image) and Renovate

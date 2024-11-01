@@ -6,7 +6,7 @@ namespace NapalmCodes.Aspire.Hosting.Krakend.Proxy;
 /// A resource that represents a service discovery aware proxy for KrakenD to utilize
 /// independent of the hosting model.
 /// </summary>
-/// <param name="name"></param>
+/// <param name="name">Resource name.</param>
 public class ProxyResource(string name) :
     ContainerResource(name),
     IResourceWithConnectionString

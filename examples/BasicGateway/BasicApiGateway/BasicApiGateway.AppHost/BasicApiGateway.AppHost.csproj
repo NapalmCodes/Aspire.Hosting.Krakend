@@ -10,10 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\NapalmCodes.Aspire.Hosting.Krakend.Proxy\NapalmCodes.Aspire.Hosting.Krakend.Proxy.csproj" />
     <ProjectReference Include="..\BasicApiGateway.ApiService\BasicApiGateway.ApiService.csproj" />
     <ProjectReference Include="..\BasicApiGateway.Web\BasicApiGateway.Web.csproj" />
     <ProjectReference Include="..\..\..\..\NapalmCodes.Aspire.Hosting.Krakend\NapalmCodes.Aspire.Hosting.Krakend.csproj" IsAspireProjectResource="false" />
+    <ProjectReference Include="..\..\..\..\NapalmCodes.Aspire.Hosting.Krakend.Proxy\NapalmCodes.Aspire.Hosting.Krakend.Proxy.csproj" />
   </ItemGroup>
 
   <ItemGroup>

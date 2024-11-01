@@ -53,17 +53,6 @@ public static class KrakendBuilderExtensions
     }
 
     /// <summary>
-    /// Adds a bind mount for the configuration folder to a KrakenD container resource.
-    /// </summary>
-    /// <param name="builder">The <see cref="IResourceBuilder{T}"/>.</param>
-    /// <param name="source">The source path of the mount. This is the path to the file or directory on the host.</param>
-    /// <param name="isReadOnly">A flag that indicates if this is a read-only mount.</param>
-    /// <returns>The <see cref="IResourceBuilder{T}"/> for chaining.</returns>
-    private static IResourceBuilder<KrakendResource> WithConfigBindMount(
-        this IResourceBuilder<KrakendResource> builder, string source, bool isReadOnly = false) =>
-            builder.WithBindMount(source, KrakendContainerConfigDirectory, isReadOnly);
-
-    /// <summary>
     /// Adds a service discovery aware proxy as a sidecar to KrakenD facilitating routing
     /// to multiple replicas of an API or service.
     /// </summary>
@@ -107,4 +96,15 @@ public static class KrakendBuilderExtensions
         
         return resourceBuilder;
     }
+    
+    /// <summary>
+    /// Adds a bind mount for the configuration folder to a KrakenD container resource.
+    /// </summary>
+    /// <param name="builder">The <see cref="IResourceBuilder{T}"/>.</param>
+    /// <param name="source">The source path of the mount. This is the path to the file or directory on the host.</param>
+    /// <param name="isReadOnly">A flag that indicates if this is a read-only mount.</param>
+    /// <returns>The <see cref="IResourceBuilder{T}"/> for chaining.</returns>
+    private static IResourceBuilder<KrakendResource> WithConfigBindMount(
+        this IResourceBuilder<KrakendResource> builder, string source, bool isReadOnly = false) =>
+        builder.WithBindMount(source, KrakendContainerConfigDirectory, isReadOnly);
 }

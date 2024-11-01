@@ -5,7 +5,7 @@ namespace NapalmCodes.Aspire.Hosting.Krakend;
 /// <summary>
 /// A resource that represents a KrakenD resource independent of the hosting model.
 /// </summary>
-/// <param name="name"></param>
+/// <param name="name">Resource name.</param>
 public class KrakendResource(string name) :
     ContainerResource(name),
     IResourceWithConnectionString
