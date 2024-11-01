@@ -7,7 +7,7 @@ namespace NapalmCodes.Aspire.Hosting.Krakend.Proxy;
 /// independent of the hosting model.
 /// </summary>
 /// <param name="name"></param>
-internal class ProxyResource(string name) :
+public class ProxyResource(string name) :
     ContainerResource(name),
     IResourceWithConnectionString
 {

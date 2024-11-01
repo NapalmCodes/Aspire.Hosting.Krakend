@@ -18,7 +18,7 @@
       "backend": [
         {
           "host": [
-            "{{ env "PROXY_URL" }}"
+            "{{ env "KRAKEND_PROXY_URL" }}"
           ],
           "url_pattern": "/weatherforecast",
           "is_collection": true
