@@ -18,7 +18,7 @@
       "backend": [
         {
           "host": [
-            "http://host.docker.internal:59125"
+            "http://host.docker.internal:8081"
           ],
           "url_pattern": "/weatherforecast",
           "is_collection": true

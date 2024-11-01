@@ -1,16 +1,14 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpLogging(options =>
-{
-});
-
-var revereseProxyBuilder = builder.Services.AddReverseProxy()
+var reverseProxyBuilder = builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
+builder.Services.AddServiceDiscovery();
 
 // https://github.com/dotnet/aspire/issues/4605
 if (!builder.Environment.IsProduction())
 {
-    revereseProxyBuilder.AddServiceDiscoveryDestinationResolver();
+    reverseProxyBuilder.AddServiceDiscoveryDestinationResolver();
 }
 
 builder.Services.AddCors(options =>
@@ -26,9 +24,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseHttpLogging();
-
-app.UseRouting();
+app.UseCors();
 
 app.MapReverseProxy();
 
