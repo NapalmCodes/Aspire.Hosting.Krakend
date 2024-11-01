@@ -73,11 +73,14 @@ public static class KrakendBuilderExtensions
             .WithHttpEndpoint(
                 port: port,
                 name: "http",
-                targetPort: 8081
+                targetPort: 8080
             )
+            .WithExternalHttpEndpoints()
             .WithImage(ProxyContainerImageTags.Image, ProxyContainerImageTags.Tag)
             // TODO: Re-enable after published to docker hub
             //.WithImageRegistry(ProxyContainerImageTags.Registry)
+            .WithEnvironment("services__apiservice__http__0", "http://host.docker.internal:5336")
+            .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
             .WithOtlpExporter();
 
         if (excludeFromManifest)

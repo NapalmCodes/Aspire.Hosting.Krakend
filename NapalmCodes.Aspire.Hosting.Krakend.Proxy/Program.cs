@@ -28,4 +28,6 @@ app.UseCors();
 
 app.MapReverseProxy();
 
+app.MapGet("/", () => "OK!");
+
 app.Run();
