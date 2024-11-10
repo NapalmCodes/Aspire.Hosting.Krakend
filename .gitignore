@@ -401,3 +401,4 @@ FodyWeavers.xsd
 # Custom
 **/TestResults
 **/coveragereport
+**/krakend_results.json

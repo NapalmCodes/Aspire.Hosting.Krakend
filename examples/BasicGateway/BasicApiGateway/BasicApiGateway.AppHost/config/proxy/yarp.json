@@ -1,0 +1,30 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "ReverseProxy": {
+    "Routes": {
+      "default_route": {
+        "ClusterId": "default_cluster",
+        "Match": {
+          "Path": "{**catch-all}"
+        }
+      }
+    },
+    "Clusters": {
+      "default_cluster": {
+        "LoadBalancingPolicy": "RoundRobin",
+        "Destinations": {
+          "api_destination": {
+            "Address": "http://apiservice"
+          }
+        }
+      }
+    }
+  }
+}

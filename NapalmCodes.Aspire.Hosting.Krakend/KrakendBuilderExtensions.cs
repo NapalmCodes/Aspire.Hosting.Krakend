@@ -12,13 +12,20 @@ public static class KrakendBuilderExtensions
     // The path within the container in which KrakenD stores the configuration
     // file(s).
     const string KrakendContainerConfigDirectory = "/etc/krakend";
+    
+    // The path within the container in which the Proxy stores the configuration
+    // file.
+    const string ProxyConfigDirectory = "/etc/proxy";
 
     /// <summary>
     /// Adds a KrakenD server to the application model. A container is used for local development.
     /// </summary>
     /// <param name="builder">The <see cref="IDistributedApplicationBuilder"/>.</param>
     /// <param name="name">The name to give the resource.</param>
-    /// <param name="configurationPath">Path to KrakenD configuration for use in bind mount.</param>
+    /// <param name="configurationPath">
+    /// Path to KrakenD configuration for use in bind mount.
+    /// Expecting `krakend.json` as the filename.
+    /// </param>
     /// <param name="useFlexibleConfiguration">
     /// Enable flexible configuration (default true).
     /// See - https://www.krakend.io/docs/configuration/flexible-config
@@ -58,17 +65,20 @@ public static class KrakendBuilderExtensions
     /// </summary>
     /// <param name="builder">The <see cref="IResourceBuilder{T}"/>.</param>
     /// <param name="name">The name to give the resource.</param>
+    /// <param name="configurationPath">
+    /// Path to KrakenD proxy configuration for use in bind mount.
+    /// Expecting `yarp.json` as the filename.
+    /// </param>
     /// <param name="port">The host port for the KrakenD server.</param>
     /// <param name="excludeFromManifest">Excludes the proxy from being published to the manifest.</param>
     /// <returns>The <see cref="IResourceBuilder{T}"/> for chaining.</returns>
     public static IResourceBuilder<ProxyResource> WithProxy(
         this IResourceBuilder<KrakendResource> builder,
         string? name = null,
+        string? configurationPath = null,
         int? port = null,
         bool excludeFromManifest = false)
     {
-        // TODO: Proxy is going to need a config mount for the json
-        
         name ??= $"{builder.Resource.Name}-proxy";
 
         var proxy = new ProxyResource(name);
@@ -87,6 +97,11 @@ public static class KrakendBuilderExtensions
         if (excludeFromManifest)
         {
             resourceBuilder.ExcludeFromManifest();
+        }
+        
+        if (!string.IsNullOrWhiteSpace(configurationPath))
+        {
+            resourceBuilder.WithConfigBindMount(configurationPath);
         }
 
         builder.WithEnvironment("KRAKEND_PROXY_URL", proxy.PrimaryEndpoint);
@@ -109,4 +124,15 @@ public static class KrakendBuilderExtensions
     private static IResourceBuilder<KrakendResource> WithConfigBindMount(
         this IResourceBuilder<KrakendResource> builder, string source, bool isReadOnly = false) =>
         builder.WithBindMount(source, KrakendContainerConfigDirectory, isReadOnly);
+    
+    /// <summary>
+    /// Adds a bind mount for the configuration folder to a Proxy container resource.
+    /// </summary>
+    /// <param name="builder">The <see cref="IResourceBuilder{T}"/>.</param>
+    /// <param name="source">The source path of the mount. This is the path to the file or directory on the host.</param>
+    /// <param name="isReadOnly">A flag that indicates if this is a read-only mount.</param>
+    /// <returns>The <see cref="IResourceBuilder{T}"/> for chaining.</returns>
+    private static IResourceBuilder<ProxyResource> WithConfigBindMount(
+        this IResourceBuilder<ProxyResource> builder, string source, bool isReadOnly = false) =>
+        builder.WithBindMount(source, ProxyConfigDirectory, isReadOnly);
 }
