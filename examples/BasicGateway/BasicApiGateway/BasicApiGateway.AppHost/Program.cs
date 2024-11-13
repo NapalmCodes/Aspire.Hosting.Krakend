@@ -7,7 +7,8 @@ var apiService = builder.AddProject<Projects.BasicApiGateway_ApiService>("apiser
 
 var krakend = builder.AddKrakend("gateway", "./config/krakend", port: 8080)
     .WithExternalHttpEndpoints()
-    .WithEnvironment("FC_OUT", "/etc/krakend/krakend_results.json"); // Optional: Helpful for troubleshooting flexible config issues
+    .WithEnvironment("FC_OUT", "/tmp/krakend.json"); // Optional: Helpful for troubleshooting flexible config issues
+                                                          // Look at it in the running container or if you want to create a bind mount.
     
 krakend.WithProxy(configurationPath: "./config/proxy", port: 8081)
     .WithReference(apiService);
