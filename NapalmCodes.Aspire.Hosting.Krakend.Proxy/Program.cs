@@ -6,7 +6,7 @@ builder.Configuration
 var reverseProxyBuilder = builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
-builder.Services.AddServiceDiscovery();
+builder.AddServiceDefaults();
 
 // https://github.com/dotnet/aspire/issues/4605
 if (!builder.Environment.IsProduction())
@@ -32,9 +32,9 @@ app.UseCors();
 app.MapReverseProxy();
 
 app.MapGet("/", () => "OK!");
+app.MapDefaultEndpoints();
 
 app.Run();
 
-//TODO: Instrument with OTEL
 //TODO: Doc updates
 //TODO: Build updates (publish image) and Renovate
