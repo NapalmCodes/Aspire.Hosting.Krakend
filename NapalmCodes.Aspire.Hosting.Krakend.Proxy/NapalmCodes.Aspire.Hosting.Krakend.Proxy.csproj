@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
     <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
-    <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:9.0</ContainerBaseImage>
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:9.0@sha256:372b16214ae67e3626a5b1513ade4a530eae10c172d56ce696163b046565fa46</ContainerBaseImage>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <IsPublishable>true</IsPublishable>
     <ContainerRegistry>docker.io</ContainerRegistry>
