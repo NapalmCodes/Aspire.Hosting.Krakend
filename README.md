@@ -4,8 +4,8 @@
 Aspire hosting component for the high performance KrakenD (https://www.krakend.io/) API Gateway.
 
 ## Overview
-The project provides a lightweight [.NET Aspire](https://learn.microsoft.com/en-us/dotnet/aspire/) component around the official Community Edition (OSS version) of the KrakenD API Gateway Docker [container](https://hub.docker.com/r/devopsfaith/krakend).
-The current latest version of the container is found [here](https://github.com/NapalmCodes/Aspire.Hosting.Krakend/blob/c4266b82e968de8ef3aedb05d347cfab74a68e8b/NapalmCodes.Aspire.Hosting.Krakend/KrakendContainerImageTags.cs#L7). Utilization of the component allows developers to work with KrakenD locally and/or configure for a production deployment using [Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/overview) and [Azure Developer CLI](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/&ved=2ahUKEwjjn9iV046IAxUCMlkFHV7VCdEQFnoECCkQAQ&usg=AOvVaw0Y5N7vJDfjU4Osk3zCXMmB) or [Aspirate](https://github.com/prom3theu5/aspirational-manifests) and [Kubernetes](https://kubernetes.io/). 
+The project provides a [.NET Aspire](https://learn.microsoft.com/en-us/dotnet/aspire/) component around the official Community Edition (OSS version) of the KrakenD API Gateway Docker [container](https://hub.docker.com/r/devopsfaith/krakend).
+The current latest version of the container is found [here](https://github.com/NapalmCodes/Aspire.Hosting.Krakend/blob/main/NapalmCodes.Aspire.Hosting.Krakend/KrakendContainerImageTags.cs#L7). Utilization of the component allows developers to work with KrakenD locally and/or configure for a production deployment using [Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/overview) / [Azure Developer CLI](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/&ved=2ahUKEwjjn9iV046IAxUCMlkFHV7VCdEQFnoECCkQAQ&usg=AOvVaw0Y5N7vJDfjU4Osk3zCXMmB) or [Aspirate](https://github.com/prom3theu5/aspirational-manifests) / [Kubernetes](https://kubernetes.io/). 
 
 ## Use
 
@@ -22,72 +22,39 @@ using NapalmCodes.Aspire.Hosting.Krakend;
 Using the provided extension methods the KrakenD component can be added to the solution as follows:
 
 ```csharp
-var krakend = builder.AddKrakend("gateway", port: 61373)
-    .WithExternalHttpEndpoints() // Optional: external endpoint if desired
-    .WithConfigBindMount("./config/krakend")
-    .WithEnvironment("FC_ENABLE", "1") // Optional: enable Flexible Configuration (https://www.krakend.io/docs/configuration/flexible-config/)
-    .WithEnvironment("FC_OUT", "/etc/krakend/result.json") // Optional: Location to output flexible configuration results (i.e.: what is actually used to run KrakenD);
+// Configuration path is used to create a bind mount to copy local `krakend.json` config
+// to the container.
+// https://www.krakend.io/docs/configuration/
+// https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/persist-data-volumes
+
+var krakend = builder.AddKrakend("gateway", "./config/krakend", port: 8080) 
+    .WithExternalHttpEndpoints()
+    .WithEnvironment("FC_OUT", "/tmp/krakend.json"); // Optional: Helpful for troubleshooting flexible config issues
+                                                     // (may want a bind mount for easy local access while debugging).
 ```
 
-*Note*: The `.WithConfigBindMount()` invocation should provide the path to the `krakend.json` file used for configuring the API Gateway. Instructions on configuring the API Gateway
-can be found at the official documentation page [here](https://www.krakend.io/docs/configuration/).
+### Sidecar Service Discovery
+
+The above is technically all that is required to work with the component. However, KrakenD is not Service Discovery aware by default preventing direct use of friendly identifiers (i.e.: `http://apiservice`)
+as host names.
+
+To facilitate the development experience a sidecar proxy can be enabled. The proxy is implemented with [YARP](https://microsoft.github.io/reverse-proxy/). It is designed to use a bind mount for setting the JSON-based configuration for your specific solution in the container. While there is nothing preventing you from deploying this proxy, it really is unnecessary when running in an environment where DNS-based service discovery (i.e.: Kubernetes DNS SRV) is available. The proxy only bridges a need for local service discovery done with environment variables by .NET Aspire. You can exclude the proxy from the manifest by using the
+`excludeFromManifest` toggle on `.WithProxy()`. The sidecar is also instrumented with OpenTelemetry using the same extensions
+found in a `*.ServiceDefaults` project within a .NET Aspire solution.
+
+```csharp
+krakend.WithProxy(configurationPath: "./config/proxy", port: 8081);
+```
+
+For example configuration, visit the YARP documentation linked above or check out the example in this repo.
+
+### Open Telemetry
+
+Using flexible configuration for KrakenD we are able to utilize the OTLP Collector hosted by .NET Aspire and discovered
+through the use of environment variables. Please see the example project for the `krakend.json` configuration enabling OTEL metrics to be transmitted to the dashboard from KrakenD.
 
 ## Known Issues
 
 Currently `http` is the best way to utilize this component locally due to complexity surrounding the trusting of self-signed certificate/certificate authorities in Docker containers. This situation is likely to evolve in future iterations of .NET Aspire.
 A conversation started by yours truly can be found [here](https://github.com/dotnet/aspire/discussions/5221). This is brought up as the consumer might want to provide OpenTelemetry metrics from KrakenD to the Aspire dashboard. A `krakend.json` config snippet
-has been provided below to assist in this. However, given the KrakenD container does not trust [dotnet dev-certs](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-dev-certs) you must run the Aspire dashboard/solution in `http` mode.
-
-The configuration snippet below will configure KrakenD to use Aspire environment variables
-for providing OpenTelemetry traces and metrics to the Aspire Dashboard. `FC_ENABLE` environment variable set to `1`
-is required to insert environment variable values into configuration. Details can be found at the official documentation
-for this configuration [here](https://www.krakend.io/docs/telemetry/opentelemetry/).
-
-```json
-  "extra_config": {
-    "telemetry/opentelemetry": {
-      "service_name": "gateway",
-      "service_version": "0.1",
-      "skip_paths": [""],
-      "metric_reporting_period": 30,
-      "exporters": {
-        "otlp": [
-          {
-            "name": "aspire_dashboard",
-            "host": "{{ (split ":" (splitList "://" (env "OTEL_EXPORTER_OTLP_ENDPOINT") | last))._0 }}",
-            "port": {{ int ((split ":" (splitList "://" (env "OTEL_EXPORTER_OTLP_ENDPOINT") | last))._1) }},
-            "use_http": false,
-            "disable_metrics": false,
-            "disable_traces": false
-          }
-        ]
-      },
-      "layers": {
-        "global": {
-          "disable_metrics": false,
-          "disable_traces": false,
-          "disable_propagation": false
-        },
-        "proxy": {
-          "disable_metrics": false,
-          "disable_traces": false
-        },
-        "backend": {
-          "metrics": {
-            "disable_stage": false,
-            "round_trip": false,
-            "read_payload": false,
-            "detailed_connection": false,
-            "static_attributes": []
-          },
-          "traces": {
-            "disable_stage": false,
-            "round_trip": false,
-            "read_payload": false,
-            "detailed_connection": false,
-            "static_attributes": []
-          }
-        }
-      }
-    }
-```
+has been provided below to assist in this. However, given the KrakenD container does not trust [dotnet dev-certs](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-dev-certs) you must run the Aspire dashboard/solution in `http` mode. There has been some effort by the .NET Aspire team in .NET 9 to enable trusting of dev certs in Linux containers. This will need to be explored.
