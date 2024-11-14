@@ -1,8 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
+  
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsAspireHost>true</IsAspireHost>
@@ -12,11 +14,12 @@
   <ItemGroup>
     <ProjectReference Include="..\BasicApiGateway.ApiService\BasicApiGateway.ApiService.csproj" />
     <ProjectReference Include="..\BasicApiGateway.Web\BasicApiGateway.Web.csproj" />
+    <ProjectReference Include="..\..\..\..\NapalmCodes.Aspire.Hosting.Krakend\NapalmCodes.Aspire.Hosting.Krakend.csproj" IsAspireProjectResource="false" />
+    <ProjectReference Include="..\..\..\..\NapalmCodes.Aspire.Hosting.Krakend.Proxy\NapalmCodes.Aspire.Hosting.Krakend.Proxy.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" Version="8.2.1" />
-    <PackageReference Include="NapalmCodes.Aspire.Hosting.Krakend" Version="1.0.6" />
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>

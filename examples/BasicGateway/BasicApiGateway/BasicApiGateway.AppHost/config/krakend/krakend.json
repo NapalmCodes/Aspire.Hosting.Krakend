@@ -18,10 +18,7 @@
       "backend": [
         {
           "host": [
-            {{- $count := env "APISERVICE_COUNT" | int -}}
-            {{- range $i := until $count }}
-              "{{ env (print "services__apiservice__http__" $i) }}"{{ if lt (add $i 1) $count }},{{ end }}
-            {{- end }}
+            "{{ env "KRAKEND_PROXY_URL" }}"
           ],
           "url_pattern": "/weatherforecast",
           "is_collection": true

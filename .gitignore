@@ -396,7 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+**/.idea
 
 # Custom
 **/TestResults
 **/coveragereport
+**/krakend_results.json
