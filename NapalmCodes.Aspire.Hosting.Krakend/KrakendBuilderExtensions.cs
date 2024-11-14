@@ -90,8 +90,7 @@ public static class KrakendBuilderExtensions
                 targetPort: 8080
             )
             .WithImage(ProxyContainerImageTags.Image, ProxyContainerImageTags.Tag)
-            // TODO: Re-enable after published to docker hub
-            //.WithImageRegistry(ProxyContainerImageTags.Registry)
+            .WithImageRegistry(ProxyContainerImageTags.Registry)
             .WithOtlpExporter();
 
         if (excludeFromManifest)

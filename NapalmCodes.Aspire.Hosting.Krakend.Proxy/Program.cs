@@ -35,6 +35,3 @@ app.MapGet("/", () => "OK!");
 app.MapDefaultEndpoints();
 
 app.Run();
-
-//TODO: Doc updates
-//TODO: Build updates (publish image) and Renovate

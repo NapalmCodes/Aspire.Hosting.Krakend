@@ -9,8 +9,7 @@
     <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:9.0</ContainerBaseImage>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <IsPublishable>true</IsPublishable>
-    <!-- TODO -->
-    <!--<ContainerRegistry>docker.io</ContainerRegistry>-->
+    <ContainerRegistry>docker.io</ContainerRegistry>
     <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
     <ContainerRepository>napalmcodes/yarp-krakend-proxy</ContainerRepository>
   </PropertyGroup>
