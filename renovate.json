@@ -22,6 +22,12 @@
       "matchDatasources": ["docker"],
       "matchPackageNames": ["devopsfaith/krakend"],
       "pinDigests": false
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPaths": ["**/*.csproj"],
+      "matchPackageNames": ["mcr.microsoft.com/dotnet/aspnet"],
+      "pinDigests": false
     }
   ]
 }
