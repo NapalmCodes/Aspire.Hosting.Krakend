@@ -48,11 +48,7 @@ jobs:
       id: publish-container
       shell: bash
       run: |
-        dotnet publish ./NapalmCodes.Aspire.Hosting.Krakend.Proxy \
-          --arch x64 \
-          --os linux \
-          -p:PublishProfile=DefaultContainer \
-          -p:ContainerImageTags=$BUILD_VERSION
+        echo "Temporarily disabled"
       
     - name: Publish Nuget
       if: startsWith(github.ref, 'refs/heads/release')
