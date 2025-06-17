@@ -40,7 +40,7 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting" Version="9.3.1" />
-    <PackageReference Include="System.Text.Json" Version="9.0.5" />
+    <PackageReference Include="System.Text.Json" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>
