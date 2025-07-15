@@ -8,37 +8,19 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^NapalmCodes\\.Aspire\\.Hosting\\.Krakend/KrakendContainerImageTags\\.cs$/"
-      ],
+      "fileMatch": ["^NapalmCodes\\.Aspire\\.Hosting\\.Krakend/KrakendContainerImageTags\\.cs$"],
       "matchStrings": [
         "public\\s+const\\s+string\\s+Tag\\s+=\\s+\"(?<currentValue>\\d+\\.\\d+\\.\\d+)\";"
       ],
       "datasourceTemplate": "docker",
       "versioningTemplate": "docker",
-      "depNameTemplate": "devopsfaith/krakend"
+      "depNameTemplate": "krakend"
     }
   ],
   "packageRules": [
     {
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchPackageNames": [
-        "devopsfaith/krakend"
-      ],
-      "pinDigests": false
-    },
-    {
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchFileNames": [
-        "**/*.csproj"
-      ],
-      "matchPackageNames": [
-        "mcr.microsoft.com/dotnet/aspnet"
-      ],
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["krakend"],
       "pinDigests": false
     }
   ]

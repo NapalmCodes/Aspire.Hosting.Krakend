@@ -17,15 +17,8 @@ jobs:
     steps:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-    - name: Docker log in
-      uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
-      with:
-        registry: ${{secrets.CONTAINER_REGISTRY}}
-        username: ${{secrets.CONTAINER_REGISTRY_USERNAME}}
-        password: ${{secrets.CONTAINER_REGISTRY_PASSWORD}}
-
     - name: Setup .NET
-      uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+      uses: actions/setup-dotnet@3e891b0cb619bf60e2c25674b222b8940e2c1c25 # v4
       with:
         dotnet-version: '9.0.x'
     
@@ -42,17 +35,6 @@ jobs:
 
     - name: Test
       run: dotnet test --configuration $BUILD_CONFIG --no-restore --no-build --verbosity normal
-
-    - name: Publish Proxy Container
-      if: startsWith(github.ref, 'refs/heads/release')
-      id: publish-container
-      shell: bash
-      run: |
-        dotnet publish ./NapalmCodes.Aspire.Hosting.Krakend.Proxy \
-          --arch x64 \
-          --os linux \
-          -p:PublishProfile=DefaultContainer \
-          -p:ContainerImageTags=$BUILD_VERSION
       
     - name: Publish Nuget
       if: startsWith(github.ref, 'refs/heads/release')

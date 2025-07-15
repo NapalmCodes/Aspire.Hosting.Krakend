@@ -1,6 +1,6 @@
 ﻿using Aspire.Hosting;
 using Aspire.Hosting.ApplicationModel;
-using NapalmCodes.Aspire.Hosting.Krakend.Proxy;
+using Aspire.Hosting.Yarp;
 
 namespace NapalmCodes.Aspire.Hosting.Krakend;
 
@@ -11,14 +11,10 @@ public static class KrakendBuilderExtensions
 {
     // The path within the container in which KrakenD stores the configuration
     // file(s).
-    const string KrakendContainerConfigDirectory = "/etc/krakend";
-    
-    // The path within the container in which the Proxy stores the configuration
-    // file.
-    const string ProxyConfigDirectory = "/etc/proxy";
+    private const string KrakendContainerConfigDirectory = "/etc/krakend";
 
     /// <summary>
-    /// Adds a KrakenD server to the application model. A container is used for local development.
+    /// Adds a KrakenD server to the application model.
     /// </summary>
     /// <param name="builder">The <see cref="IDistributedApplicationBuilder"/>.</param>
     /// <param name="name">The name to give the resource.</param>
@@ -60,57 +56,40 @@ public static class KrakendBuilderExtensions
     }
 
     /// <summary>
-    /// Adds a service discovery aware proxy as a sidecar to KrakenD facilitating routing
+    /// Adds a service discovery aware proxy as a "sidecar" to KrakenD facilitating routing
     /// to multiple replicas of an API or service.
     /// </summary>
     /// <param name="builder">The <see cref="IResourceBuilder{T}"/>.</param>
     /// <param name="name">The name to give the resource.</param>
     /// <param name="configurationPath">
-    /// Path to KrakenD proxy configuration for use in bind mount.
-    /// Expecting `yarp.json` as the filename.
+    /// Path to KrakenD YARP proxy configuration.
     /// </param>
-    /// <param name="port">The host port for the KrakenD server.</param>
     /// <param name="excludeFromManifest">Excludes the proxy from being published to the manifest.</param>
     /// <returns>The <see cref="IResourceBuilder{T}"/> for chaining.</returns>
-    public static IResourceBuilder<ProxyResource> WithProxy(
+    public static IResourceBuilder<YarpResource> WithProxy(
         this IResourceBuilder<KrakendResource> builder,
         string? name = null,
         string? configurationPath = null,
-        int? port = null,
         bool excludeFromManifest = false)
     {
         name ??= $"{builder.Resource.Name}-proxy";
 
-        var proxy = new ProxyResource(name);
-
-        var resourceBuilder = builder.ApplicationBuilder.AddResource(proxy)
-            .WithHttpEndpoint(
-                port: port,
-                name: ProxyResource.PrimaryEndpointName,
-                targetPort: 8080
-            )
-            .WithImage(ProxyContainerImageTags.Image, ProxyContainerImageTags.Tag)
-            .WithImageRegistry(ProxyContainerImageTags.Registry)
+        var proxy = builder.ApplicationBuilder.AddYarp(name)
             .WithOtlpExporter();
-
-        if (excludeFromManifest)
+        
+        if(excludeFromManifest)
         {
-            resourceBuilder.ExcludeFromManifest();
+            proxy.ExcludeFromManifest();   
         }
         
         if (!string.IsNullOrWhiteSpace(configurationPath))
         {
-            resourceBuilder.WithConfigBindMount(configurationPath);
+            proxy.WithConfigFile(configurationPath);
         }
-
-        builder.WithEnvironment("KRAKEND_PROXY_URL", proxy.PrimaryEndpoint);
         
-        // Service discovery (SD) is only enabled for the proxy in non-production environments. Production will likely have DNS SRV and
-        // honestly probably doesn't even need the proxy. Should someone want it to deploy though we can do that and just turn SD off.
-        resourceBuilder.WithEnvironment("ASPNETCORE_ENVIRONMENT",
-            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+        builder.WithEnvironment("KRAKEND_PROXY_URL", proxy.GetEndpoint("http"));
         
-        return resourceBuilder;
+        return proxy;
     }
     
     /// <summary>
@@ -123,15 +102,4 @@ public static class KrakendBuilderExtensions
     private static IResourceBuilder<KrakendResource> WithConfigBindMount(
         this IResourceBuilder<KrakendResource> builder, string source, bool isReadOnly = false) =>
         builder.WithBindMount(source, KrakendContainerConfigDirectory, isReadOnly);
-    
-    /// <summary>
-    /// Adds a bind mount for the configuration folder to a Proxy container resource.
-    /// </summary>
-    /// <param name="builder">The <see cref="IResourceBuilder{T}"/>.</param>
-    /// <param name="source">The source path of the mount. This is the path to the file or directory on the host.</param>
-    /// <param name="isReadOnly">A flag that indicates if this is a read-only mount.</param>
-    /// <returns>The <see cref="IResourceBuilder{T}"/> for chaining.</returns>
-    private static IResourceBuilder<ProxyResource> WithConfigBindMount(
-        this IResourceBuilder<ProxyResource> builder, string source, bool isReadOnly = false) =>
-        builder.WithBindMount(source, ProxyConfigDirectory, isReadOnly);
 }
