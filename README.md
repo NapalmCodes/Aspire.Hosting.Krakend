@@ -43,7 +43,7 @@ To facilitate the development experience a sidecar proxy can be enabled. The pro
 found in a `*.ServiceDefaults` project within a .NET Aspire solution.
 
 ```csharp
-krakend.WithProxy(configurationPath: "./config/proxy", port: 8081);
+krakend.WithProxy(configurationPath: "./config/proxy/yarp.json");
 ```
 
 For example configuration, visit the YARP documentation linked above or check out the example in this repo.
