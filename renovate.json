@@ -14,13 +14,13 @@
       ],
       "datasourceTemplate": "docker",
       "versioningTemplate": "docker",
-      "depNameTemplate": "devopsfaith/krakend"
+      "depNameTemplate": "krakend"
     }
   ],
   "packageRules": [
     {
       "matchDatasources": ["docker"],
-      "matchPackageNames": ["devopsfaith/krakend"],
+      "matchPackageNames": ["krakend"],
       "pinDigests": false
     }
   ]
