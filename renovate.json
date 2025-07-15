@@ -8,7 +8,9 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^NapalmCodes\\.Aspire\\.Hosting\\.Krakend/KrakendContainerImageTags\\.cs$"],
+      "managerFilePatterns": [
+        "/^NapalmCodes\\.Aspire\\.Hosting\\.Krakend/KrakendContainerImageTags\\.cs$/"
+      ],
       "matchStrings": [
         "public\\s+const\\s+string\\s+Tag\\s+=\\s+\"(?<currentValue>\\d+\\.\\d+\\.\\d+)\";"
       ],
@@ -19,8 +21,12 @@
   ],
   "packageRules": [
     {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["krakend"],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "krakend"
+      ],
       "pinDigests": false
     }
   ]
