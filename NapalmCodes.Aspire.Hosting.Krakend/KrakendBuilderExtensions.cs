@@ -57,34 +57,37 @@ public static class KrakendBuilderExtensions
 
     /// <summary>
     /// Adds a service discovery aware proxy as a "sidecar" to KrakenD facilitating routing
-    /// to multiple replicas of an API or service.
+    /// to service discovery aware destinations.
     /// </summary>
     /// <param name="builder">The <see cref="IResourceBuilder{T}"/>.</param>
+    /// <param name="rules">The rules for configuring proxy forwarding to various destinations.</param>
     /// <param name="name">The name to give the resource.</param>
-    /// <param name="configurationPath">
-    /// Path to KrakenD YARP proxy configuration.
-    /// </param>
     /// <param name="excludeFromManifest">Excludes the proxy from being published to the manifest.</param>
     /// <returns>The <see cref="IResourceBuilder{T}"/> for chaining.</returns>
     public static IResourceBuilder<YarpResource> WithProxy(
         this IResourceBuilder<KrakendResource> builder,
+        IEnumerable<ProxyRule> rules,
         string? name = null,
-        string? configurationPath = null,
         bool excludeFromManifest = false)
     {
         name ??= $"{builder.Resource.Name}-proxy";
 
         var proxy = builder.ApplicationBuilder.AddYarp(name)
+            .WithConfiguration(yarpBuilder =>
+            {
+                foreach (var rule in rules)
+                {
+                    var cluster = yarpBuilder.AddCluster(rule.Destination)
+                        .WithLoadBalancingPolicy(rule.LoadBalancingPolicy);
+                    
+                    yarpBuilder.AddRoute(rule.Path, cluster);    
+                }
+            })
             .WithOtlpExporter();
         
         if(excludeFromManifest)
         {
             proxy.ExcludeFromManifest();   
-        }
-        
-        if (!string.IsNullOrWhiteSpace(configurationPath))
-        {
-            proxy.WithConfigFile(configurationPath);
         }
         
         builder.WithEnvironment("KRAKEND_PROXY_URL", proxy.GetEndpoint("http"));

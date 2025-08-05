@@ -38,15 +38,12 @@ var krakend = builder.AddKrakend("gateway", "./config/krakend", port: 8080)
 The above is technically all that is required to work with the component. However, KrakenD is not Service Discovery aware by default preventing direct use of friendly identifiers (i.e.: `http://apiservice`)
 as host names.
 
-To facilitate the development experience a sidecar proxy can be enabled. The proxy is implemented with [YARP](https://microsoft.github.io/reverse-proxy/). It is designed to use a bind mount for setting the JSON-based configuration for your specific solution in the container. While there is nothing preventing you from deploying this proxy, it really is unnecessary when running in an environment where DNS-based service discovery (i.e.: Kubernetes DNS SRV) is available. The proxy only bridges a need for local service discovery done with environment variables by .NET Aspire. You can exclude the proxy from the manifest by using the
-`excludeFromManifest` toggle on `.WithProxy()`. The sidecar is also instrumented with OpenTelemetry using the same extensions
-found in a `*.ServiceDefaults` project within a .NET Aspire solution.
+To facilitate the development experience a sidecar proxy can be enabled. The proxy is implemented with [YARP](https://microsoft.github.io/reverse-proxy/). While there is nothing preventing you from deploying this proxy, it really is unnecessary when running in an environment where DNS-based service discovery (i.e.: Kubernetes DNS SRV) is available. The proxy only bridges a need for local service discovery done with environment variables by .NET Aspire. You can exclude the proxy from the manifest by using the
+`excludeFromManifest` toggle on `.WithProxy()`. The sidecar is also instrumented with OpenTelemetry as other Aspire components are.
 
 ```csharp
-krakend.WithProxy(configurationPath: "./config/proxy/yarp.json");
+krakend.WithProxy([new ProxyRule{ Path = "/{**catch-all}", Destination = apiService }]);
 ```
-
-For example configuration, visit the YARP documentation linked above or check out the example in this repo.
 
 ### Open Telemetry
 
