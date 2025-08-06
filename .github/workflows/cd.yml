@@ -52,9 +52,9 @@ jobs:
         echo "$changelog" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
 
-    # - name: Publish Nuget
-    #   run: |
-    #     dotnet nuget push **/*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
+    - name: Publish Nuget
+      run: |
+        dotnet nuget push **/*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
