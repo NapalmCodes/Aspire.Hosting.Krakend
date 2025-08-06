@@ -3,7 +3,7 @@
 VersionString=$1
 
 # Use regex to match the version components
-if [[ $VersionString =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)? ]]; then
+if [[ $VersionString =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)? ]]; then
     Major="${BASH_REMATCH[1]}"
     Minor="${BASH_REMATCH[2]}"
     Patch="${BASH_REMATCH[3]}"
