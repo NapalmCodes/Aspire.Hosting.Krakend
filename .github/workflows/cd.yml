@@ -2,8 +2,8 @@ name: CD
 
 on:
   push:
-    branches:
-      - 'release/**'
+    tags:
+      - "v*.*.*"
     
 jobs:
   build:
@@ -25,9 +25,11 @@ jobs:
     - name: Get Build Version
       run: |
         echo "GITHUB_REF=$GITHUB_REF"
-        branch_name=${GITHUB_REF#refs/heads/}
-        version=$(./build/GetBuildVersion.sh ${branch_name#*/})
+        tag_name=${GITHUB_REF#refs/tags/}
+        version=$(./build/GetBuildVersion.sh $tag_name)
         echo "BUILD_VERSION=$version" >> $GITHUB_ENV
+        echo "tag_name=$tag_name" >> $GITHUB_ENV
+        echo "tag_name=$tag_name" >> $GITHUB_OUTPUT
       shell: bash
 
     - name: Build
@@ -35,8 +37,26 @@ jobs:
 
     - name: Test
       run: dotnet test --configuration $BUILD_CONFIG --no-restore --no-build --verbosity normal
-      
+
+    - name: Generate Changelog
+      id: changelog
+      run: |
+        previous_tag=$(git describe --tags --abbrev=0 HEAD^)
+        echo "Previous tag: $previous_tag"
+        changelog=$(git log $previous_tag..HEAD --pretty=format:"* %s (%an)")
+        echo "$changelog" > CHANGELOG.md
+        echo "changelog<<EOF" >> $GITHUB_OUTPUT
+        echo "$changelog" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
     - name: Publish Nuget
-      if: startsWith(github.ref, 'refs/heads/release')
       run: |
         dotnet nuget push **/*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ env.tag_name }}
+        name: Release ${{ env.tag_name }}
+        body: ${{ steps.changelog.outputs.changelog }}
+        token: ${{ secrets.GITHUB_TOKEN }}
