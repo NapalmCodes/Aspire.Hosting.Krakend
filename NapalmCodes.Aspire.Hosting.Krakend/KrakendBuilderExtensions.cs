@@ -83,6 +83,7 @@ public static class KrakendBuilderExtensions
                     yarpBuilder.AddRoute(rule.Path, cluster);    
                 }
             })
+            .WithParentRelationship(builder)
             .WithOtlpExporter();
         
         if(excludeFromManifest)
