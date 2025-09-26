@@ -40,9 +40,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting" Version="9.4.2" />
-    <PackageReference Include="Aspire.Hosting.Yarp" Version="9.4.0-preview.1.25378.8" />
-    <PackageReference Include="System.Text.Json" Version="9.0.9" />
+    <PackageReference Include="Aspire.Hosting" Version="9.5.0" />
+    <PackageReference Include="Aspire.Hosting.Yarp" Version="9.5.0-preview.1.25474.7" />
   </ItemGroup>
 
   <ItemGroup>
