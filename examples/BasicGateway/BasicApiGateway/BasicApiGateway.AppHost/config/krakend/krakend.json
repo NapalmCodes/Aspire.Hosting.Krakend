@@ -43,33 +43,6 @@
             "disable_traces": false
           }
         ]
-      },
-      "layers": {
-        "global": {
-          "disable_metrics": false,
-          "disable_traces": false,
-          "disable_propagation": false
-        },
-        "proxy": {
-          "disable_metrics": false,
-          "disable_traces": false
-        },
-        "backend": {
-          "metrics": {
-            "disable_stage": false,
-            "round_trip": false,
-            "read_payload": false,
-            "detailed_connection": false,
-            "static_attributes": []
-          },
-          "traces": {
-            "disable_stage": false,
-            "round_trip": false,
-            "read_payload": false,
-            "detailed_connection": false,
-            "static_attributes": []
-          }
-        }
       }
     },
     "telemetry/logging": {

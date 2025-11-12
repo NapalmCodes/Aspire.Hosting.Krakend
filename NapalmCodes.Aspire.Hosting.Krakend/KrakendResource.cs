@@ -12,12 +12,10 @@ public class KrakendResource(string name) :
 {
     internal const string PrimaryEndpointName = "http";
 
-    private EndpointReference? _primaryEndpoint;
-
     /// <summary>
     /// Gets the primary endpoint for the KrakenD server.
     /// </summary>
-    public EndpointReference PrimaryEndpoint => _primaryEndpoint ??= new(this, PrimaryEndpointName);
+    private EndpointReference PrimaryEndpoint => field ??= new(this, PrimaryEndpointName);
 
     /// <summary>
     /// Gets the connection string expression for the KrakenD server.

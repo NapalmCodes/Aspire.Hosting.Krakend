@@ -52,6 +52,7 @@ through the use of environment variables. Please see the example project for the
 
 ## Known Issues
 
-Currently `http` is the best way to utilize this component locally due to complexity surrounding the trusting of self-signed certificate/certificate authorities in Docker containers. This situation is likely to evolve in future iterations of .NET Aspire.
-A conversation started by yours truly can be found [here](https://github.com/dotnet/aspire/discussions/5221). This is brought up as the consumer might want to provide OpenTelemetry metrics from KrakenD to the Aspire dashboard. A `krakend.json` config snippet
-has been provided in the example to assist with this. However, given the KrakenD container does not trust [dotnet dev-certs](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-dev-certs) you must run the Aspire dashboard/solution in `http` mode. There has been some effort by the .NET Aspire team in .NET 9 to enable trusting of dev certs in Linux containers. This will need to be explored.
+Currently the `http` profile is the best way to utilize this component locally if one desires to see their OTEL telemetry in the Aspire Dashboard.
+There seems to be a perpetual issue with KrakenD OTEL Support (see https://github.com/krakend/krakend-ce/issues/914) being unable to push to the OTLP endpoint provided by Aspire.
+
+**New for Aspire 13**: A new argument `trustDeveloperCertificates` is now available on the `AddKrakend()` extension method to trust dotnet dev-certs on the KrakenD component. If the aforementioned issue is resolved, this "should" enable a full `https` development experience.
