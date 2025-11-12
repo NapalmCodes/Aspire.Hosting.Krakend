@@ -26,6 +26,7 @@ public static class KrakendBuilderExtensions
     /// Enable flexible configuration (default true).
     /// See - https://www.krakend.io/docs/configuration/flexible-config
     /// </param>
+    /// <param name="trustDeveloperCertificates">Whether to trust developer certificates (default true).</param>
     /// <param name="port">The host port for the KrakenD server.</param>
     /// <returns>The <see cref="IResourceBuilder{T}"/> for chaining.</returns>
     public static IResourceBuilder<KrakendResource> AddKrakend(
@@ -33,6 +34,7 @@ public static class KrakendBuilderExtensions
         string name,
         string? configurationPath = null,
         bool useFlexibleConfiguration = true,
+        bool trustDeveloperCertificates = true,
         int? port = null)
     {
         var krakendResource = new KrakendResource(name);
@@ -45,7 +47,8 @@ public static class KrakendBuilderExtensions
             .WithImage(KrakendContainerImageTags.Image, KrakendContainerImageTags.Tag)
             .WithImageRegistry(KrakendContainerImageTags.Registry)
             .WithOtlpExporter()
-            .WithEnvironment("FC_ENABLE", useFlexibleConfiguration ? "1" : "0");
+            .WithEnvironment("FC_ENABLE", useFlexibleConfiguration ? "1" : "0")
+            .WithDeveloperCertificateTrust(trust: trustDeveloperCertificates);
 
         if (!string.IsNullOrWhiteSpace(configurationPath))
         {
