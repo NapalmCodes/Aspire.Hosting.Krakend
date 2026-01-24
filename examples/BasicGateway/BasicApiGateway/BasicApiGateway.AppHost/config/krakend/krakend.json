@@ -21,11 +21,7 @@
             "{{ env "KRAKEND_PROXY_URL" }}"
           ],
           "url_pattern": "/weatherforecast",
-          "is_collection": true,
-          "input_headers": [
-            "traceparent",
-            "tracestate"
-          ]
+          "is_collection": true
         }
       ]
     }
@@ -36,6 +32,13 @@
       "service_version": "0.1",
       "skip_paths": [ "" ],
       "metric_reporting_period": 30,
+      "layers": {
+        "backend": {
+          "traces": {
+            "round_trip": true
+          }
+        }
+      },
       "exporters": {
         "otlp": [
           {
