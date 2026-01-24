@@ -32,6 +32,10 @@
       "service_version": "0.1",
       "skip_paths": [ "" ],
       "metric_reporting_period": 30,
+      "trace_sample_rate": 1.0,
+      "propagators": [
+        "w3c"
+      ],
       "exporters": {
         "otlp": [
           {
