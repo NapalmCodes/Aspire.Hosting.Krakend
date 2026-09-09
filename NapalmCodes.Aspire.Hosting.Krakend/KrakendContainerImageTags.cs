@@ -4,5 +4,5 @@ internal static class KrakendContainerImageTags
 {
     public const string Registry = "docker.io";
     public const string Image = "krakend";
-    public const string Tag = "2.13.8";
+    public const string Tag = "2.13.11";
 }
